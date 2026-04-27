@@ -1,4 +1,4 @@
-🎧 Helpline Management System (Architecture MVC)
+🎧 Ticketing Management System (Architecture MVC)
 
 📝 Présentation du Projet
 
