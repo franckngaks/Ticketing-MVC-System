@@ -1,1 +1,4 @@
-.DS_Store
+echo "**/__pycache__/
+**/.venv/
+**/poetry.lock
+.DS_Store" >> .gitignore

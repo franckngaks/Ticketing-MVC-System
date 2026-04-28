@@ -6,7 +6,7 @@ Ce projet est une application de gestion de tickets d'incidents et de référent
 
 🚀 Fonctionnalités
 
-Gestion des Employés (Service Identity) : CRUD complet (Création, Lecture, Mise à jour, Suppression).
+Gestion des Employés (Service Employes) : CRUD complet (Création, Lecture, Mise à jour, Suppression).
 
 Gestion des Incidents (Service Ticketing) : Workflow de création, modification et résolution de tickets.
 
