@@ -5,43 +5,35 @@ from mysql.connector import Error
 
 def get_connection():
     """
-    LOGIQUE TECHNIQUE : Établit le tunnel avec PHPMyAdmin (MySQL).
-    
-    Cette fonction est le point d'entrée unique pour tous les services 
-    (Identity, Ticketing, etc.) souhaitant interagir avec les données.
+    Établit une connexion sécurisée avec la base de données MySQL.
+    Configuration optimisée pour MAMP sur macOS.
     """
     try:
-        # CONSEIL DÉBOGAGE : 
-        # 1. Vérifiez que MySQL est "Vert" dans XAMPP/WAMP.
-        # 2. Si 'localhost' échoue, essayez '127.0.0.1'.
-        # 3. Vérifiez le port (3306 par défaut, parfois 3307 ou 3308).
-        
+        # Tentative de connexion avec les paramètres fournis
         connection = mysql.connector.connect(
-            host='127.0.0.1',    # '127.0.0.1' est souvent plus stable que 'localhost'
-            port=8889,           # Vérifiez ce numéro dans votre panneau XAMPP
-            user='root',         # Utilisateur par défaut
-            password='root',         # Mot de passe vide par défaut
-            database='helpline_db' # Nom de la base créée en SQL
+            host='127.0.0.1',      # IP locale pour plus de stabilité
+            port=8889,             # Port par défaut de MAMP SQL
+            user='root',           # Administrateur par défaut
+            password='root',       # Mot de passe par défaut MAMP
+            database='helpline_db' # Nom de ta base de données
         )
-        
+
         if connection.is_connected():
             return connection
-            
+
     except Error as e:
-        # En cas d'erreur (serveur éteint, mauvais mot de passe...)
-        print(f"❌ Erreur de connexion technique : {e}")
-        print("👉 ASTUCE : Vérifiez que MySQL est bien lancé dans XAMPP/WAMP (bouton Start).")
+        # Journalisation de l'erreur pour la maintenance applicative
+        print(f"❌ Erreur de connexion à MySQL : {e}")
         return None
 
-# --- TEST D'INFRASTRUCTURE ---
-# Ce bloc s'exécute uniquement si tu lances ce fichier directement.
+# --- TEST D'AUTO-VALIDATION ---
 if __name__ == "__main__":
-    print("🔍 Test de la connexion à la base de données...")
+    print("⏳ Test de connexion en cours...")
     conn = get_connection()
     if conn:
-        print("✅ Succès ! Le tunnel entre Python et PHPMyAdmin est opérationnel.")
-        conn.close() # On libère la ressource immédiatement après le test
+        print("✅ Connexion établie avec succès !")
+        conn.close()
     else:
-        print("⚠️ Échec. La base de données ne répond pas.")
+        print("❌ Échec : Vérifiez que les serveurs MAMP sont bien lancés.")
 
 

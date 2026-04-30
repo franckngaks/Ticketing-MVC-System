@@ -1,0 +1,22 @@
+[project]
+name = "ia-analyses-service"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "spacy (>=3.8.14,<4.0.0)",
+    "sqlalchemy (>=2.0.49,<3.0.0)",
+    "pymysql (>=1.1.2,<2.0.0)",
+    "cryptography (>=47.0.0,<48.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+package-mode = false
+packages = [{include = "ia_analyse_service", from = "src"}]
