@@ -1,0 +1,103 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "identite_service"
+version = "0.1.0"
+description = "Gestion des tickets"
+readme = "README.md"
+authors = [
+  {name = "Franck Ngako", email = "franckngako.dev@proton.me"}
+]
+maintainers = [
+  {name = "Franck Ngako", email = "franckngako.dev@proton.me"}
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Typing :: Typed",
+]
+license = {text = "MIT"}
+dependencies = [
+  "typer",
+  "rich",
+  "mysql-connector-python (==9.1.0)",
+  "flask (>=3.1.3,<4.0.0)",
+]
+requires-python = ">= 3.12"
+
+[dependency-groups]
+dev = [
+    { include-group = "lint" },
+    { include-group = "test" },
+    { include-group = "typecheck" },
+]
+lint = [
+    "ruff",
+]
+test = [
+    "coverage",
+    "pytest",
+]
+typecheck = [
+    "ty",
+]
+docs = [
+    "zensical",
+    "mkdocstrings-python",
+]
+
+[project.urls]
+bugs = "https://github.com/franckngaks/identite_service/issues"
+changelog = "https://github.com/franckngaks/identite_service/releases"
+documentation = "https://franckngaks.github.io/identite_service/"
+homepage = "https://github.com/franckngaks/identite_service"
+
+[project.scripts]
+identite_service = "identite_service.cli:app"
+
+[tool.ty]
+# All rules are enabled as "error" by default; no need to specify unless overriding.
+# Example override: relax a rule for the entire project (uncomment if needed).
+# rules.TY015 = "warn"  # For invalid-argument-type, warn instead of error.
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+source = ["src/", "tests/"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 50
+exclude_also = [
+    "if TYPE_CHECKING:",
+    "if typing.TYPE_CHECKING:",
+    "@overload",
+    "@typing.overload",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+    "raise NotImplementedError",
+    "\\.\\.\\.",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv]
+package = true
+default-groups = ["dev"]

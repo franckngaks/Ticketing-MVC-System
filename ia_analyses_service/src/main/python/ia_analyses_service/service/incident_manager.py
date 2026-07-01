@@ -20,8 +20,18 @@ class IncidentManager:
         count = 0
 
         for _, row in df_incidents.iterrows():
-            # 1. Analyse par le service IA
-            categorie, sentiment, mots_cles, score = self.ia_service.analyser_incident(row['description']) # cite: 1
+            # 🚨 SÉCURITÉ ANTI-CRASH : On extrait et nettoie la description et le titre
+            titre_brut = str(row['titre']) if 'titre' in row and row['titre'] else "Sans titre"
+            desc_brute = str(row['description']) if 'description' in row and row['description'] else ""
+            
+            # Si la description est vide ou équivalente à 'nan' (chaîne générée par Pandas), on prend le titre
+            if not desc_brute.strip() or desc_brute.lower() == 'nan':
+                description_propre = titre_brut
+            else:
+                description_propre = desc_brute
+
+            # 1. Analyse par le service IA (avec la description sécurisée)
+            categorie, sentiment, mots_cles, score = self.ia_service.analyser_incident(description_propre)
 
             # 1. Mise à jour des compteurs
             total_score += score
@@ -35,7 +45,7 @@ class IncidentManager:
             
             # 2. Ton PRINT demandé : Le rapport d'analyse
             print(f"🆔 Incident #{row['id']}")
-            print(f"📝 Panne : {row['titre']}")
+            print(f"📝 Panne : {titre_brut}")
             print(f"🤖 Analyse IA : {categorie}")
             print(f"🤖 Sentiment de l'utilisateur: {sentiment}")
             print(f"🤖 Mots clés extraits : {mots_cles}")
@@ -43,4 +53,4 @@ class IncidentManager:
             print("-" * 50)
 
             # 3. Sauvegarde dans ia_analyses
-            self.repo.save_analysis(row['id'], categorie, sentiment, mots_cles, score) # cite: 1
+            self.repo.save_analysis(row['id'], categorie, sentiment, mots_cles, score)
