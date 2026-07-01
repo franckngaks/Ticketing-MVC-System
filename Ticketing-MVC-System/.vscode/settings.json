@@ -1,5 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "./identite_service/src/main/python/identite_service/controller"
-    ]
-}

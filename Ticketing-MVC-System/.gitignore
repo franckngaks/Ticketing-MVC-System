@@ -1,4 +1,0 @@
-echo "**/__pycache__/
-**/.venv/
-**/poetry.lock
-.DS_Store" >> .gitignore
